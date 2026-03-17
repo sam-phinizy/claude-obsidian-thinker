@@ -11,8 +11,18 @@ A Claude Code plugin that keeps project context lightweight and persistent acros
 
 ## Installation
 
-```bash
-claude plugin add sam-phinizy/claude-obsidian-thinker
+Inside Claude Code, add the marketplace and install:
+
+```
+/plugin marketplace add sam-phinizy/sams-claude-menagerie
+/plugin install claude-obsidian-thinker@sams-claude-menagerie
+```
+
+Or install directly from this repo:
+
+```
+/plugin marketplace add sam-phinizy/claude-obsidian-thinker
+/plugin install claude-obsidian-thinker@claude-obsidian-thinker
 ```
 
 ## Prerequisites
