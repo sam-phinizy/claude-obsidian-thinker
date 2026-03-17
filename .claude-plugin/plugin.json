@@ -1,0 +1,9 @@
+{
+  "name": "claude-obsidian-thinker",
+  "version": "0.1.0",
+  "description": "Keeps project context lightweight and persistent across Claude sessions via Obsidian. Auto-writes session summaries, project notes, daily logs, and a searchable knowledge base.",
+  "author": {
+    "name": "Sam Phinizy"
+  },
+  "keywords": ["obsidian", "workflow", "context", "knowledge", "daily-log"]
+}
