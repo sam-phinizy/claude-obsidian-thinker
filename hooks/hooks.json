@@ -1,13 +1,16 @@
 {
-  "Stop": [
-    {
-      "matcher": "",
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "bash $CLAUDE_PLUGIN_ROOT/hooks/scripts/stop-closeout.sh"
-        }
-      ]
-    }
-  ]
+  "description": "Auto-closeout session to Obsidian on stop",
+  "hooks": {
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "bash $CLAUDE_PLUGIN_ROOT/hooks/scripts/stop-closeout.sh"
+          }
+        ]
+      }
+    ]
+  }
 }
