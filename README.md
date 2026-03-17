@@ -9,6 +9,12 @@ A Claude Code plugin that keeps project context lightweight and persistent acros
 - **Stop hook** — Automatically runs closeout when the session ends (skips if `/closeout` already ran).
 - **Recall skill** — Claude auto-triggers recall when it hits gnarly or familiar-looking problems.
 
+## Installation
+
+```bash
+claude plugin add sam-phinizy/claude-obsidian-thinker
+```
+
 ## Prerequisites
 
 1. Obsidian 1.12+ with the CLI enabled (Settings → General → Command line interface)
