@@ -1,0 +1,10 @@
+version: "3"
+
+tasks:
+  release:
+    desc: Trigger a release via GitHub Actions (BUMP=patch|minor|major)
+    vars:
+      BUMP: '{{.BUMP | default "patch"}}'
+    cmds:
+      - gh workflow run release.yml -f bump={{.BUMP}}
+      - echo "Triggered {{.BUMP}} release — check https://github.com/sam-phinizy/claude-obsidian-thinker/actions"
