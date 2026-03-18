@@ -1,0 +1,61 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: "Version bump type"
+        required: true
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Get app token
+        id: app-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Bump version, commit, and tag
+        id: bump
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          CURRENT=$(jq -r '.version' .claude-plugin/plugin.json)
+          IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT"
+
+          case "$BUMP" in
+            major) MAJOR=$((MAJOR + 1)); MINOR=0; PATCH=0 ;;
+            minor) MINOR=$((MINOR + 1)); PATCH=0 ;;
+            patch) PATCH=$((PATCH + 1)) ;;
+          esac
+
+          VERSION="$MAJOR.$MINOR.$PATCH"
+          TAG="v$VERSION"
+
+          jq --arg v "$VERSION" '.version = $v' .claude-plugin/plugin.json > /tmp/plugin.json.tmp
+          mv /tmp/plugin.json.tmp .claude-plugin/plugin.json
+
+          git config user.name "menagerie-publisher[bot]"
+          git config user.email "menagerie-publisher[bot]@users.noreply.github.com"
+          git add .claude-plugin/plugin.json
+          git commit -m "release: $TAG"
+          git tag "$TAG"
+          git push origin main "$TAG"
+
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "Released $TAG (was $CURRENT)"
